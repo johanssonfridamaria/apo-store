@@ -11,6 +11,11 @@ html {
   /* color: green; */
 }
 
+.page-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .btn {
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
@@ -36,6 +41,8 @@ html {
 
 .cart-btn {
   padding: 0;
+  color: #ffffff;
+  /* align-items: center; */
 }
 
 .navbar-cart {

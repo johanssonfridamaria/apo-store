@@ -1,40 +1,43 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import ProductList from './components/ProductList';
+import { getProducts, getCart, addToCart } from './api';
+
+const useProducts = () => {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    getProducts()
+      .then(response => setProducts(response));
+  }, [])
+
+  return products;
+}
+
+const useCart = () => {
+  const [cart, setCart] = useState(null);
+  useEffect(() => {
+    getCart()
+      .then(response => setCart(response));
+  }, [])
+
+  return cart;
+}
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState(null);
+  const products = useProducts();
 
-  useEffect(() => {
-    let ignore = false;
-
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'X-Key': 'qwerty' }
-    }
-
-    fetch('https://apoteket-test.azurewebsites.net/api/products', requestOptions)
-      .then(response => response.json())
-      .then(json => {
-        if (!ignore) {
-          console.log('json', json)
-          setProducts(json)
-        }
-      })
-
-    return () => {
-      ignore = true
-    }
-  }, [])
+  const handleAddToCart = () => {
+    addToCart(1, 2);
+  }
 
   return (
     <div>
       <nav className='navbar'>
         <div>Apo-shop</div>
         <div className='navbar-cart'>
-          <button className='btn cart-btn'>
-            <span className="material-symbols-outlined navbar-icon" >
+          <button className='btn cart-btn' onClick={getCart}>
+            {/* <span>{cart.Total}</span> */}
+            <span className='material-symbols-outlined navbar-icon' >
               shopping_bag
             </span>
           </button>
@@ -43,9 +46,11 @@ function App() {
           </div> */}
         </div>
       </nav>
-      {products.length &&
-        <ProductList products={products} />
-      }
+      <div className='page-container'>
+        {products.length &&
+          <ProductList products={products} addToCart={handleAddToCart} />
+        }
+      </div>
     </div>
   );
 }
