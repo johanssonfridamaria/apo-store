@@ -7,27 +7,23 @@ const useProducts = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     getProducts()
-      .then(response => setProducts(response));
+      .then(data => setProducts(data));
   }, [])
 
   return products;
 }
 
-const useCart = () => {
-  const [cart, setCart] = useState(null);
-  useEffect(() => {
-    getCart()
-      .then(response => setCart(response));
-  }, [])
-
-  return cart;
-}
-
 function App() {
+  const [cart, setCart] = useState(null);
   const products = useProducts();
 
   const handleAddToCart = () => {
     addToCart(1, 2);
+  }
+
+  const handleGetCart = () => {
+    getCart()
+      .then(data => setCart(data));
   }
 
   return (
@@ -35,15 +31,21 @@ function App() {
       <nav className='navbar'>
         <div>Apo-shop</div>
         <div className='navbar-cart'>
-          <button className='btn cart-btn' onClick={getCart}>
+          <button className='btn cart-btn' onClick={handleGetCart}>
             {/* <span>{cart.Total}</span> */}
             <span className='material-symbols-outlined navbar-icon' >
               shopping_bag
             </span>
           </button>
-          {/* <div>
-            varukorg
-          </div> */}
+          {cart != null &&
+            <div>
+              {cart.items.map(item => <div key={item.Id}>
+                <div>item.Id</div>
+                <div>item.Quantity</div>
+              </div>)}
+              <div>cart.Total</div>
+            </div>
+          }
         </div>
       </nav>
       <div className='page-container'>

@@ -29,5 +29,5 @@ export const addToCart = (id, quantity) => {
   };
 
   return fetch("https://apoteket-test.azurewebsites.net/api/cart", requestOptions)
-    .then(response => response.json());
+    .then(response => { return response.json(); });
 }
