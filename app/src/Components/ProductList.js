@@ -2,7 +2,7 @@ import ProductCard from "./ProductCard"
 
 export default function ProductList({ products }) {
   return (
-    <div>
+    <div className="list">
       {products.map(product =>
         <ProductCard key={product.Id} product={product} />
       )}

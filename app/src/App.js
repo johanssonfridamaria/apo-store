@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import ProductList from './Components/ProductList';
+import ProductList from './components/ProductList';
+import ProductCard from './components/ProductCard';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -31,6 +32,9 @@ function App() {
       {products.length &&
         <ProductList products={products} />
       }
+      {/* {products.length &&
+        <ProductCard product={products[0]} />
+      } */}
     </div>
   );
 }
