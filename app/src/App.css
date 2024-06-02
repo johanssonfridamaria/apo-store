@@ -11,6 +11,36 @@ html {
   /* color: green; */
 }
 
+.btn {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 0.1rem solid transparent;
+  background-color: transparent;
+  outline: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.navbar {
+  background-color: #212121;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  justify-content: space-between;
+}
+
+.navbar-icon {
+  color: white;
+}
+
+.cart-btn {
+  padding: 0;
+}
+
+.navbar-cart {
+}
+
 .list {
   display: flex;
   flex-wrap: wrap;
@@ -20,7 +50,7 @@ html {
   display: flex;
   flex: 1 1 0;
   border-radius: 10px;
-  background-color: white;
+  background-color: #ffffff;
   padding: 10px;
   margin: 10px 10px 10px 10px;
   width: fit-content;
@@ -74,13 +104,7 @@ html {
 }
 
 .product-btn {
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: 0.1rem solid transparent;
   background-color: #e1bee7;
-  outline: transparent;
-  font-size: 0.8rem;
-  cursor: pointer;
 }
 
 .product-btn:hover {

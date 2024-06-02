@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import ProductList from './components/ProductList';
-import ProductCard from './components/ProductCard';
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState(null);
 
   useEffect(() => {
     let ignore = false;
@@ -22,19 +22,30 @@ function App() {
           setProducts(json)
         }
       })
+
     return () => {
       ignore = true
     }
   }, [])
 
   return (
-    <div className="App">
+    <div>
+      <nav className='navbar'>
+        <div>Apo-shop</div>
+        <div className='navbar-cart'>
+          <button className='btn cart-btn'>
+            <span className="material-symbols-outlined navbar-icon" >
+              shopping_bag
+            </span>
+          </button>
+          {/* <div>
+            varukorg
+          </div> */}
+        </div>
+      </nav>
       {products.length &&
         <ProductList products={products} />
       }
-      {/* {products.length &&
-        <ProductCard product={products[0]} />
-      } */}
     </div>
   );
 }
