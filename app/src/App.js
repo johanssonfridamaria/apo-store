@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
 import './App.css';
+import ProductList from './Components/ProductList';
 
 function App() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    let ignore = false;
+
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'X-Key': 'qwerty' }
+    }
+
+    fetch('https://apoteket-test.azurewebsites.net/api/products', requestOptions)
+      .then(response => response.json())
+      .then(json => {
+        if (!ignore) {
+          console.log('json', json)
+          setProducts(json)
+        }
+      })
+    return () => {
+      ignore = true
+    }
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {products.length &&
+        <ProductList products={products} />
+      }
     </div>
   );
 }
