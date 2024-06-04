@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './ProductCard.css'
 
 export default function ProductCard({ product, addToCart }) {
   const [picNotFound, setPicNotFound] = useState(false);

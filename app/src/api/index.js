@@ -29,5 +29,17 @@ export const addToCart = (id, quantity) => {
   };
 
   return fetch("https://apoteket-test.azurewebsites.net/api/cart", requestOptions)
-    .then(response => { return response.json(); });
+    .then(response => response)
 }
+
+export const deleteCart = () => {
+  const requestOptions = {
+    method: "DELETE",
+    credentials: "include",
+    headers: { "X-Key": "qwerty" },
+  };
+
+  return fetch("https://apoteket-test.azurewebsites.net/api/cart", requestOptions)
+    .then(response => response)
+}
+
