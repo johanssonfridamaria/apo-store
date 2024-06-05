@@ -45,9 +45,7 @@ function App() {
 
             const cartData = {
               Items: data.Items.map(a => {
-                console.log('Products', products)
                 const product = products.find(b => b.Id === a.Id);
-                console.log('product', product)
                 return {
                   id: a.Id,
                   price: product.Price,
