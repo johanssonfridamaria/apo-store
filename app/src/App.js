@@ -29,6 +29,7 @@ function App() {
 
       if (exceedsLimit) {
         setAddToCartError({ hasError: true, productId: id, message: 'Din varukorg är full' })
+        return;
       }
     }
 
