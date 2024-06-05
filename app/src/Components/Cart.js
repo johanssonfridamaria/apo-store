@@ -1,18 +1,18 @@
 import './Cart.css';
 
-export default function Cart({ cart, deleteCart, setShowCart }) {
+export default function Cart({ cart, deleteCart, toggleCart }) {
 
-  const handleCloseCart = () => {
-    setShowCart(false);
-  }
+  // const handleCloseCart = () => {
+  //   setShowCart(false);
+  // }
 
-  console.log('cart', cart)
+  console.log(cart)
 
   return (
     <div className="cart">
       <div className="cart-header">
         <span>Varukorg</span>
-        <button className="btn close" onClick={handleCloseCart}>
+        <button className="btn close" onClick={toggleCart}>
           <span className="material-symbols-outlined">
             close
           </span>
@@ -25,9 +25,14 @@ export default function Cart({ cart, deleteCart, setShowCart }) {
           <div className='cart-items'>
             {cart.Items.map(item =>
               <div key={item.Id} className="cart-item">
-                <div>id: {item.Id}</div>
-                <div>X {item.Quantity}</div>
+                <div>{item.name}</div>
+                <div>x {item.quantity}</div>
+                <div>{item.price} kr </div>
               </div>)}
+          </div>
+          <div className='cart-bottom'>
+            <span>Total summa:</span>
+            <div>{cart.Total} kr</div>
           </div>
           <button className="btn" onClick={deleteCart}>
             <span>Töm varukorgen</span>
@@ -35,10 +40,6 @@ export default function Cart({ cart, deleteCart, setShowCart }) {
               delete
             </span>
           </button>
-          <div className='cart-bottom'>
-            <span>Total summa:</span>
-            <div>{cart.Total} kr</div>
-          </div>
         </div>
         : <div>Din varukorg är tom</div>
       }

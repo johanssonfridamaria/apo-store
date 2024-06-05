@@ -13,7 +13,6 @@ export default function ProductCard({ product, addToCart, error }) {
     addToCart(product.Id, quantity, product.Price);
   }
 
-  console.log('buyable', product.Buyable)
   return (
     <div className="card">
       <div className="product">
@@ -31,6 +30,14 @@ export default function ProductCard({ product, addToCart, error }) {
           </div>
         </div>
         <div className="product-lower">
+          {error && error.productId === product.Id &&
+            <div className="error-message">
+              <span className="material-symbols-outlined">
+                error
+              </span>
+              <p>{error.message}</p>
+            </div>
+          }
           <div className="product-price">
             <span> {product.Price} kr</span>
             <button disabled={!product.Buyable}
@@ -38,14 +45,6 @@ export default function ProductCard({ product, addToCart, error }) {
               {!product.Buyable ? 'Slut i lager' : 'Köp'}
             </button>
           </div>
-          {error && error.productId === product.Id &&
-            <div className="error-message">
-              <span className="material-symbols-outlined">
-                error
-              </span>
-              <p>Det går inte att lägga till i varukorgen just nu</p>
-            </div>
-          }
         </div>
       </div>
     </div>

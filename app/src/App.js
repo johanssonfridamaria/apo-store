@@ -3,6 +3,7 @@ import './App.css';
 import ProductList from './components/ProductList';
 import { getProducts, getCart, addToCart, deleteCart } from './api';
 import Cart from './components/Cart';
+import Navbar from './components/Navbar';
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);
@@ -17,42 +18,50 @@ const useProducts = () => {
 function App() {
   const [cart, setCart] = useState(null);
   const [showCart, setShowCart] = useState(false);
-  // const [isSaving, setIsSaving] = useState(false);
   const [addToCartError, setAddToCartError] = useState(false);
   const products = useProducts();
-  // const productConfigs = products.map(a => {
-  //   id = a.Id,
-  //     error = false,
-  //   name =   
-  // })
 
   const handleAddToCart = (id, quantity, price) => {
+    setAddToCartError(false);
 
     if (cart != null) {
       const exceedsLimit = (cart.Total += price) > 5000;
 
       if (exceedsLimit) {
-        //Do something
+        setAddToCartError({ hasError: true, productId: id, message: 'Din varukorg är full' })
       }
     }
 
     addToCart(id, quantity)
       .then(data => {
+        console.log('data', data)
         getCart()
           .then(data => {
             if (data.Items.length === 0) {
               console.log('fel fick ej tillbaka items i cart')
-              setAddToCartError(true)
+              setAddToCartError({ hasError: true, productId: id })
             }
-            console.log('data getcart', data);
-            setCart(data);
+
+            const cartData = {
+              Items: data.Items.map(a => {
+                console.log('Products', products)
+                const product = products.find(b => b.Id === a.Id);
+                console.log('product', product)
+                return {
+                  id: a.Id,
+                  price: product.Price,
+                  name: product.Name,
+                  pic: product.Pic,
+                  quantity: a.Quantity
+                }
+              }),
+              Total: data.Total
+            }
+
+            setCart(cartData);
           });
       })
-      .catch(err => { console.log('err', err); setAddToCartError({ hasError: true, productId: id }); })
-  }
-
-  const handleGetCart = () => {
-    setShowCart(!showCart);
+      .catch(err => { console.log('err', err); setAddToCartError({ hasError: true, productId: id, message: 'Varan lades inte till. Försök igen!' }); })
   }
 
   const handleDeleteCart = () => {
@@ -62,20 +71,7 @@ function App() {
 
   return (
     <div>
-      <nav className='navbar'>
-        <div>Apo-shop</div>
-        <div className='navbar-cart'>
-          <button className='btn cart-btn' onClick={handleGetCart}>
-            <span>{cart?.Total != null ? cart.Total : '0.00'}</span>
-            <span className='material-symbols-outlined navbar-icon' >
-              shopping_bag
-            </span>
-          </button>
-          <div className={`shopping-cart ${showCart ? 'open' : ''}`}>
-            <Cart cart={cart} deleteCart={handleDeleteCart} setShowCart={setShowCart} />
-          </div>
-        </div>
-      </nav>
+      <Navbar cart={cart} setShowCart={setShowCart} showCart={showCart} deleteCart={handleDeleteCart} />
       <div className='page-container'>
         {products.length &&
           <ProductList products={products} addToCart={handleAddToCart} error={addToCartError} />

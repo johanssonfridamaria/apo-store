@@ -17,7 +17,12 @@ export const getCart = () => {
     credentials: 'include',
     headers: { "X-Key": "qwerty" }
   })
-    .then(response => response.json());
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      throw new Error('Something went wrong when fetching cart');
+    });
 }
 
 export const addToCart = (id, quantity) => {
@@ -29,7 +34,12 @@ export const addToCart = (id, quantity) => {
   };
 
   return fetch("https://apoteket-test.azurewebsites.net/api/cart", requestOptions)
-    .then(response => response)
+    .then(response => {
+      if (response.status === 200 || response.status === 201) {
+        return response;
+      }
+      throw new Error('Something went wrong when adding to cart');
+    })
 }
 
 export const deleteCart = () => {
@@ -40,6 +50,11 @@ export const deleteCart = () => {
   };
 
   return fetch("https://apoteket-test.azurewebsites.net/api/cart", requestOptions)
-    .then(response => response)
+    .then(response => {
+      if (response.status === 200) {
+        return response;
+      }
+      throw new Error('Something went wrong when deleting cart');
+    })
 }
 
