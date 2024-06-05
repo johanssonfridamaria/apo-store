@@ -6,10 +6,10 @@ export default function Cart({ cart, deleteCart, setShowCart }) {
     setShowCart(false);
   }
 
+  console.log('cart', cart)
+
   return (
     <div className="cart">
-
-
       <div className="cart-header">
         <span>Varukorg</span>
         <button className="btn close" onClick={handleCloseCart}>
@@ -19,24 +19,31 @@ export default function Cart({ cart, deleteCart, setShowCart }) {
         </button>
       </div>
 
-      {cart != null
-        ? <div>
-          <button onClick={deleteCart}>
+      {cart?.Items.length > 0
+        ?
+        <div className='cart-content'>
+          <div className='cart-items'>
+            {cart.Items.map(item =>
+              <div key={item.Id} className="cart-item">
+                <div>id: {item.Id}</div>
+                <div>X {item.Quantity}</div>
+              </div>)}
+          </div>
+          <button className="btn" onClick={deleteCart}>
             <span>Töm varukorgen</span>
             <span className="material-symbols-outlined">
               delete
             </span>
           </button>
-          {cart.Items.length > 0 && cart.Items.map(item =>
-            <div key={item.Id} className="cart-item">
-              <div>{item.Id}</div>
-              <div>{item.Quantity}</div>
-            </div>)}
-          <div>{cart.Total}</div>
+          <div className='cart-bottom'>
+            <span>Total summa:</span>
+            <div>{cart.Total} kr</div>
+          </div>
         </div>
         : <div>Din varukorg är tom</div>
       }
 
-    </div>
+
+    </div >
   )
 }
