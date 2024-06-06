@@ -2,7 +2,6 @@ import './Cart.css';
 
 export default function Cart({ cart, deleteCart, toggleCart }) {
 
-  console.log('cart', cart)
   return (
     <div className="cart">
       <div className="cart-header">
@@ -40,7 +39,6 @@ export default function Cart({ cart, deleteCart, toggleCart }) {
         </div>
         : <div>Din varukorg är tom</div>
       }
-
     </div >
   )
 }
