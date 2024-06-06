@@ -3,7 +3,7 @@ import './ProductCard.css'
 
 export default function ProductCard({ product, addToCart, error }) {
   const [picNotFound, setPicNotFound] = useState(false);
-  const [quantity, setQuantity] = useState(1)
+  const quantity = 1
 
   const onError = () => {
     setPicNotFound(true);
@@ -24,10 +24,8 @@ export default function ProductCard({ product, addToCart, error }) {
                 no_photography
               </span>}
           </div>
-          <div>
-            <h3>{product.Name}</h3>
-            <p>{product.Description}</p>
-          </div>
+          <h3>{product.Name}</h3>
+          <p>{product.Description}</p>
         </div>
         <div className="product-lower">
           {error && error.productId === product.Id &&

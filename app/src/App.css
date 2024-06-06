@@ -1,29 +1,23 @@
-* {
-  box-sizing: border-box;
-  /* padding: 0;
-  margin: 0; */
-}
-
-body,
-html {
-  background-color: rgb(247, 247, 247);
-  font-family: 'Roboto', sans-serif;
-}
-
 p {
   font-size: 0.75rem;
 }
 
-.page-container {
+.container {
   width: 80%;
   margin: 0 auto;
-  padding: 65px 0 0 0;
+  padding: 4rem 0 0 0;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .btn {
-  border-radius: 0.5rem;
-  padding: 0.5rem 2rem;
-  border: 0.1rem solid transparent;
+  border-radius: 8px;
+  padding: 8px 32px;
+  border: 1px solid transparent;
   background-color: transparent;
   outline: transparent;
   font-size: 1rem;
@@ -37,6 +31,11 @@ p {
   cursor: not-allowed;
 }
 
+.disabled:hover {
+  background-color: rgb(221, 221, 221) !important;
+}
+
+/* 
 .loader {
   width: 48px;
   height: 48px;
@@ -46,10 +45,4 @@ p {
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
-}
-
-.card-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+} */

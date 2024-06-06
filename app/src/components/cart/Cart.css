@@ -19,24 +19,15 @@
   flex-direction: column;
 }
 
-.cart-content .btn {
-  padding: 0;
-  margin-bottom: 20px;
-  justify-self: flex-end;
-}
-
-.close {
+.icon {
   margin-left: auto;
-  padding: 0;
-}
-
-.cart-items {
-  margin-bottom: 20px;
+  padding: 0 !important;
 }
 
 .cart-item {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 .cart-item > div {
@@ -45,10 +36,12 @@
 }
 
 .cart-item > div:first-child {
+  flex: 2 1 0;
   text-align: left !important;
 }
 
-.cart-bottom {
+.cart-total {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 16px;
 }

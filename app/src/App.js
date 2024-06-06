@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import './App.css';
-import ProductList from './components/ProductList';
 import { getProducts, getCart, addToCart, deleteCart } from './api';
-import Cart from './components/Cart';
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar/Navbar';
+import ProductCard from './components/productCard/ProductCard'
+import './App.css';
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);
@@ -35,27 +34,32 @@ function App() {
 
     addToCart(id, quantity)
       .then(data => {
-        console.log('data', data)
         getCart()
           .then(data => {
-            if (data.Items.length === 0) {
-              console.log('fel fick ej tillbaka items i cart')
-              setAddToCartError({ hasError: true, productId: id })
-            }
+
+            const itemsAndProductsCombined = data.Items.map(a => {
+              const product = products.find(b => b.Id === a.Id);
+              return {
+                id: a.Id,
+                price: product.Price,
+                name: product.Name,
+                pic: product.Pic,
+                quantity: a.Quantity
+              }
+            });
+
+            const getItemsTotal = () => {
+              const total = itemsAndProductsCombined.reduce((prev, curr) => prev + (curr.price * quantity), 0);
+              return (Math.round(total * 100) / 100).toFixed(2);
+            };
+
+            console.log('itemsTotal', getItemsTotal())
+            console.log('itemsAndProductsCombined', itemsAndProductsCombined)
 
             const cartData = {
-              Items: data.Items.map(a => {
-                const product = products.find(b => b.Id === a.Id);
-                return {
-                  id: a.Id,
-                  price: product.Price,
-                  name: product.Name,
-                  pic: product.Pic,
-                  quantity: a.Quantity
-                }
-              }),
-              Total: data.Total
-            }
+              Items: itemsAndProductsCombined,
+              ItemsTotal: getItemsTotal()
+            };
 
             setCart(cartData);
           });
@@ -69,14 +73,18 @@ function App() {
   }
 
   return (
-    <div>
+    <>
       <Navbar cart={cart} setShowCart={setShowCart} showCart={showCart} deleteCart={handleDeleteCart} />
-      <div className='page-container'>
+      <div className='container'>
         {products.length &&
-          <ProductList products={products} addToCart={handleAddToCart} error={addToCartError} />
+          <div className="card-wrapper">
+            {products.map(product =>
+              <ProductCard key={product.Id} product={product} addToCart={handleAddToCart} error={addToCartError} />
+            )}
+          </div>
         }
       </div>
-    </div>
+    </>
   );
 }
 
