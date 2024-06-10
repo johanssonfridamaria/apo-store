@@ -25,11 +25,15 @@ export const getConvertedCartData = (data, products) => {
 
   const getItemsTotal = () => {
     const total = itemsAndProductsCombined.reduce((prev, curr) => prev + (curr.price * curr.quantity), 0);
-    return (Math.round(total * 100) / 100).toFixed(2);
+    return getNumberWithDecimal(total);
   };
 
   return {
     Items: itemsAndProductsCombined,
     ItemsTotal: getItemsTotal()
   };
+}
+
+export const getNumberWithDecimal = (num) => {
+  return (Math.round(num * 100) / 100).toFixed(2);
 }

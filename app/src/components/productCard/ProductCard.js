@@ -1,5 +1,6 @@
 import { useState } from "react";
 import './ProductCard.css'
+import { getNumberWithDecimal } from "../../utils";
 
 export default function ProductCard({ product, addToCart, setAddToCartError, error, cartTotal }) {
   const [picNotFound, setPicNotFound] = useState(false);
@@ -31,7 +32,7 @@ export default function ProductCard({ product, addToCart, setAddToCartError, err
         <div>
           <div className="product-image">
             {!picNotFound
-              ? <img src={product.Pic} onError={onError} />
+              ? <img src={product.Pic} alt={product.name} onError={onError} />
               : <span className="material-symbols-outlined">
                 no_photography
               </span>}
@@ -49,7 +50,7 @@ export default function ProductCard({ product, addToCart, setAddToCartError, err
             </div>
           }
           <div className="product-price">
-            <span> {product.Price} kr</span>
+            <span> {getNumberWithDecimal(product.Price)} kr</span>
             <button disabled={!product.Buyable}
               className={`btn product-btn ${!product.Buyable ? "disabled" : ""}`} onClick={handleClick}>
               {!product.Buyable ? 'Slut i lager' : 'Köp'}
