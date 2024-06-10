@@ -1,16 +1,28 @@
 import { useState } from "react";
 import './ProductCard.css'
 
-export default function ProductCard({ product, addToCart, error }) {
+export default function ProductCard({ product, addToCart, setAddToCartError, error, cartTotal }) {
   const [picNotFound, setPicNotFound] = useState(false);
-  const quantity = 1
+  const quantity = 1;
 
   const onError = () => {
     setPicNotFound(true);
   }
 
   const handleClick = () => {
-    addToCart(product.Id, quantity, product.Price);
+    let exceedsLimit = false;
+    let cartTotalInt = parseInt(cartTotal)
+    if (cartTotal != null) {
+      const sum = cartTotalInt += (product.Price * quantity)
+      exceedsLimit = sum > 5000;
+      if (exceedsLimit) {
+        setAddToCartError({ productId: product.Id, message: 'Din varukorg är full' });
+      }
+    }
+
+    if (!exceedsLimit) {
+      addToCart(product.Id, quantity);
+    }
   }
 
   return (
