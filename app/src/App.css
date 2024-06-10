@@ -34,15 +34,3 @@ p {
 .disabled:hover {
   background-color: rgb(221, 221, 221) !important;
 }
-
-/* 
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid rgb(255, 255, 255);
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-} */
